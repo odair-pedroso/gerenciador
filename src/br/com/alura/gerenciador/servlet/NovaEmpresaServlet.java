@@ -26,6 +26,8 @@ public class NovaEmpresaServlet extends HttpServlet {
 		Banco banco = new Banco(); // simulando um banco de dados para gravação da empresa
 		banco.adiciona(empresa);
 
+		System.out.println("Nova empresa cadastrada Servlet: " + empresa.getNome());
+
 		// chamar o JSP
 		RequestDispatcher rd = request.getRequestDispatcher("/novaEmpresaCriada.jsp");
 		request.setAttribute("empresa", empresa.getNome());
