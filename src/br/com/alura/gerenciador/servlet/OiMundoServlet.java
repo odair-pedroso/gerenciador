@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 //oi
 
 @WebServlet(urlPatterns = "/oi")
-public class OiMundoSerlet extends HttpServlet {
+public class OiMundoServlet extends HttpServlet {
+
+	public OiMundoServlet() {
+		System.out.println("Criando Oi mundo na Servlet");
+	}
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
