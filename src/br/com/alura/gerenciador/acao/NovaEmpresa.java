@@ -1,4 +1,4 @@
-package br.com.alura.gerenciador.servlet;
+package br.com.alura.gerenciador.acao;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -6,21 +6,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.alura.gerenciador.modelo.Banco;
 import br.com.alura.gerenciador.modelo.Empresa;
 
-//@WebServlet("/novaEmpresa")
-public class NovaEmpresaServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class NovaEmpresa {
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("Cadastrando nova empresa via Servlet........");
+		System.out.println("Cadastrando nova empresa via Classe unica ........");
 
 		String nomeEmpresa = request.getParameter("nome");
 		String dataEmpresa = request.getParameter("data");
@@ -43,16 +39,11 @@ public class NovaEmpresaServlet extends HttpServlet {
 		Banco banco = new Banco(); // simulando um banco de dados para gravação da empresa
 		banco.adiciona(empresa);
 
-		System.out.println(
-				"Nova empresa cadastrada Servlet: " + empresa.getNome() + " data abertura" + empresa.getDataAbertura());
+		System.out.println("Nova empresa cadastrada via Classe unica: " + empresa.getNome() + " data abertura"
+				+ empresa.getDataAbertura());
 
 		request.setAttribute("empresa", empresa.getNome());
-		response.sendRedirect("listaEmpresas"); // nao pode ter barra
-
-		// // chamar o JSP
-		// RequestDispatcher rd = request.getRequestDispatcher("/listaEmpresas");
-		// request.setAttribute("empresa", empresa.getNome());
-		// rd.forward(request, response);
+		response.sendRedirect("entrada?acao=ListaEmpresas"); // nao pode ter barra
 
 	}
 

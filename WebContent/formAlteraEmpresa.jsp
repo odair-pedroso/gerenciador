@@ -4,7 +4,7 @@
 
 
 
-<c:url value="/alteraEmpresa" var="LinkServletNovaEmpresa"/>
+<c:url value="/entrada" var="LinkEntradaServlet"/>
 
 <!DOCTYPE html>
 <html>
@@ -14,11 +14,12 @@
 </head>
 <body>
 
-	<form action="${LinkServletNovaEmpresa}" method="post">
+	<form action="${LinkEntradaServlet}" method="post">
 	
 		Nome: <input type = "text" name = "nome" value="${empresa.nome}"/>
 		Data Abertura: <input type = "text" name = "data" value="<fmt:formatDate value="${empresa.dataAbertura}" pattern="dd/MM/yyyy"/>"/>
 		<input type="hidden" name="id" value="${empresa.id}">
+		<input type="hidden" name="acao" value="AlteraEmpresa">
 		
 		<input type="submit"/>	
 	
