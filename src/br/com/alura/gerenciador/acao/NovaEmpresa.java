@@ -14,7 +14,8 @@ import br.com.alura.gerenciador.modelo.Empresa;
 
 public class NovaEmpresa {
 
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public String executa(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		System.out.println("Cadastrando nova empresa via Classe unica ........");
 
@@ -43,7 +44,7 @@ public class NovaEmpresa {
 				+ empresa.getDataAbertura());
 
 		request.setAttribute("empresa", empresa.getNome());
-		response.sendRedirect("entrada?acao=ListaEmpresas"); // nao pode ter barra
+		return "redirect:entrada?acao=ListaEmpresas";
 
 	}
 
