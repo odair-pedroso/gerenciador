@@ -8,10 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.com.alura.gerenciador.acao.Acao;
 
-@WebServlet("/entrada")
+@WebServlet(urlPatterns = "/entrada")
 public class UnicaEntradaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -19,6 +20,22 @@ public class UnicaEntradaServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String paramAcao = request.getParameter("acao");
+		System.out.println(paramAcao);
+
+		// trecho código que pega a SessionId da requisição e verifica se usuario ja
+		// esta logado ou nao, se nao estiver ele retorna para tela login, não
+		// conseguindo acessar diretamente as ações sem passar pelo Login
+
+		HttpSession session = request.getSession();
+		boolean usuarioNaoLogado = session.getAttribute("usuarioLogado") == null;
+		boolean ehUmaAcaoProtegida = !(paramAcao.equals("Login") || paramAcao.equals("LoginForm"));
+
+		if (ehUmaAcaoProtegida && usuarioNaoLogado) {
+			response.sendRedirect("entrada?acao=LoginForm");
+			return;
+		}
+
+		// trecho que recupera os parametros do formulario e direciona para ação correta
 
 		// muitos if e else; gostariamos que fosse assim : paramAcao.executa(req,res);
 		// refatoração desta etapa :
