@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.thoughtworks.xstream.XStream;
+
 import br.com.alura.gerenciador.modelo.Banco;
 import br.com.alura.gerenciador.modelo.Empresa;
 
@@ -20,6 +23,34 @@ public class EmpresasService extends HttpServlet {
 			throws ServletException, IOException {
 
 		List<Empresa> empresas = new Banco().getEmpresas();
+
+		String valor = request.getHeader("Accept");
+		System.out.println(valor);
+
+		if (valor.contains("xml")) {
+			XStream xstream = new XStream();
+			xstream.alias("empresa", Empresa.class);
+			String xml = xstream.toXML(empresas);
+
+			response.setContentType("application/xml");
+			response.getWriter().print(xml);
+			System.out.println("Web Service XML : " + xml);
+
+		} else if (valor.endsWith("json")) {
+
+			Gson gson = new Gson();
+			String json = gson.toJson(empresas);
+
+			response.setContentType("application/json");
+			response.getWriter().print(json);
+			System.out.println("Web Service Json : " + json);
+
+		} else {
+
+			response.setContentType("application/json");
+			response.getWriter().print("{'message':'no content'}");
+
+		}
 
 	}
 
